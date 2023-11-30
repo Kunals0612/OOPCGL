@@ -1,47 +1,33 @@
-//Assignment 13
-#include <iostream>
-#include <string>
-#include <map>
+#include<iostream>
+#include<map>
+#include<algorithm>
 using namespace std;
-int main()
+
+int main ()
 {
-    int numStates
-    cout << "Enter the number of states: ";
-    cin >> numStates;
-    string* states = new string[numStates];
-    int* pops = new int[numStates];
-    for (int j = 0; j < numStates; j++)
-    {
-        cout << "Enter state name for state " << j + 1 << ": ";
-        cin >> states[j];
+    map<string,int>m;
+    int num;
+    cout<<"Enter the number of states you want to enter : ";cin>>num;cout<<endl;
+    for(int i = 0 ;i<num ; i++){
+        string name;
+        cout<<"Enter name of state : ";cin>>name;cout<<endl;
+        int popu;
+        cout<<"Enter name of Population : ";cin>>popu;cout<<endl;
+        m.insert({name,popu});
+    }
 
-
-        cout << "Enter population for state " << j + 1 << ": ";
-        cin >> pops[j];
+    string s;
+    cout << endl
+         << "Enter state name you wanna find population of :- ";
+    cin >> s;
+    map<string,int>::iterator it=m.begin();
+    it = m.find(s);
+    if(it!=m.end()){
+        cout<<"Population of the "<<it->first<<" is  "<<it->second<<endl;
     }
-    map<string, int, less<string>> mapStates;
-    for (int j = 0; j < numStates; j++)
-    {
-        mapStates[states[j]] = pops[j];
+    else{
+        cout<<"Not found!!!";
     }
-    string name;
-    int pop;
-    cout << "Enter state: ";
-    cin >> name;
-    if (mapStates.find(name) != mapStates.end())
-    {
-        pop = mapStates[name];
-        cout << "Population: " << pop << ",000\n";
-    }
-    else
-    {
-        cout << "State not found in the map.\n";
-    }
-    cout << endl;
-    for (auto iter = mapStates.begin(); iter != mapStates.end(); iter++)
-        cout << iter->first << ' ' << iter->second << ",000\n";
-    delete[] states;
-    delete[] pops;
+    
     return 0;
 }
-
