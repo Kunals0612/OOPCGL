@@ -82,3 +82,16 @@ int main(int argc, char **argv)
     glutMainLoop();
     return 0;
 }
+// 1. Install OpenGL on Ubuntu: [in terminal]
+// sudo apt-get install freeglut3-dev
+
+// 2. Write cpp code in editor & compile on termial  with below command
+
+// 3. Compile code on terminal with below command
+// g++ filename.cpp -lGL -lGLU -lglut
+
+// 4. execute
+// ./a.out
+
+// for Linux Fedora:
+// yum install freeglut-devel
