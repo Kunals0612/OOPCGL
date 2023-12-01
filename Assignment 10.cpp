@@ -1,4 +1,3 @@
-//Assignment 10
 #include "mainwindow.h"
 
 #include "ui_mainwindow.h"
@@ -67,7 +66,7 @@ void MainWindow::paint_recursive(int order,int x1,int y1,int x5,int y5)
 
     {
 
-        DDA(x1,y1,x5,y5);
+        dda(x1,y1,x5,y5);
 
     }
 
@@ -104,7 +103,7 @@ void MainWindow::paint_recursive(int order,int x1,int y1,int x5,int y5)
 }
 
 
-void MainWindow::DDA(int x1,int y1,int x2,int y2)
+void MainWindow::dda(float x1,float y1,float x2,float y2)
 
 {
 
@@ -151,4 +150,3 @@ void MainWindow::DDA(int x1,int y1,int x2,int y2)
     }
 
 }
-
