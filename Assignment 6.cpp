@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
 }
 
 MainWindow::~MainWindow()
@@ -18,35 +19,54 @@ MainWindow::~MainWindow()
     delete ui;
 }
 QImage img(500,500,QImage::Format_RGB888);
-void MainWindow::paintEvent(QPaintEvent *event)
+QImage img1(500,500,QImage::Format_RGB888);
+void MainWindow::dda(float x1, float y1, float x2, float y2)
 {
-   Q_UNUSED(event);
-   QPainter qp(this);
-   myFunction(&qp);
+    float dx,dy,xinc,yinc;
+    float length;
+
+    dx = x2-x1;
+    dy = y2-y1;
+
+    if(abs(dx)>abs(dy)){
+        length = abs(dx);
+    }else{
+        length = abs(dy);
+    }
+
+    xinc = dx/length;
+    yinc = dy/length;
+    int i=0;
+    while(i<=length){
+        img1.setPixel(x1,y1,qRgb(255,255,255));
+        x1+=xinc;
+        y1+=yinc;
+        i++;
+    }
 }
-void MainWindow::myFunction(QPainter *qp)
+void MainWindow::dda1(float x1, float y1, float x2, float y2)
 {
-    QPen pen(Qt::black,2,Qt::SolidLine);
-    qp->setPen(pen);
-    qp->drawLine(200,200,200,350);
-    qp->drawLine(200,350,350,350);
-    qp->drawLine(350,350,350,200);
-    qp->drawLine(350,200,200,200);
-    float x1,y1,x2,y2;
-    char c[4],d[4];
-    x1=250;
-    y1=300;
-    x2=450;
-    y2=450;
-    float m = ((y2-y1)/(x2-x1));
-    code(c,x1,y1);
-    code(d,x2,y2);
-    clipping(c,d,x1,y1,m);
-    clipping(d,c,x2,y2,m);
-    qp->setPen(QPen(Qt::blue));
-    qp->drawLine(x1,y1,x2,y2);
+    float dx,dy,xinc,yinc;
+    float length;
 
+    dx = x2-x1;
+    dy = y2-y1;
 
+    if(abs(dx)>abs(dy)){
+        length = abs(dx);
+    }else{
+        length = abs(dy);
+    }
+
+    xinc = dx/length;
+    yinc = dy/length;
+    int i=0;
+    while(i<=length){
+        img.setPixel(x1,y1,qRgb(255,255,255));
+        x1+=xinc;
+        y1+=yinc;
+        i++;
+    }
 }
 void MainWindow:: code(char c[4],float x,float y)
 {
@@ -92,6 +112,48 @@ void MainWindow :: clipping(char c[],char d[],float &x,float &y,float m)
     }
 
 }
+void MainWindow::on_pushButton_clicked()
+{
+      dda(200,200,200,350);
+      dda(200,350,350,350);
+      dda(350,350,350,200);
+      dda(350,200,200,200);
+      float x1,y1,x2,y2;
+      char c[4],d[4];
+      x1=ui->textEdit->toPlainText().toInt();
+      y1=ui->textEdit_2->toPlainText().toInt();
+      x2=ui->textEdit_3->toPlainText().toInt();
+      y2=ui->textEdit_4->toPlainText().toInt();
+      float m = ((y2-y1)/(x2-x1));
+      code(c,x1,y1);
+      code(d,x2,y2);
+      clipping(c,d,x1,y1,m);
+      clipping(d,c,x2,y2,m);
+      dda(x1,y1,x2,y2);
+      ui->label_2->setPixmap(QPixmap::fromImage(img1));
+}
+void MainWindow::boundary()
+{
+    float x1,y1,x2,y2;
+    dda1(200,200,200,350);
+    dda1(200,350,350,350);
+    dda1(350,350,350,200);
+    dda1(350,200,200,200);
+    x1=ui->textEdit->toPlainText().toInt();
+    y1=ui->textEdit_2->toPlainText().toInt();
+    x2=ui->textEdit_3->toPlainText().toInt();
+    y2=ui->textEdit_4->toPlainText().toInt();
+    dda1(x1,y1,x2,y2);
+    ui->label->setPixmap(QPixmap::fromImage(img));
+}
+
+
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    boundary();
+}
+
 #ifndef MAINWINDOW_H
 
 #define MAINWINDOW_H
@@ -126,6 +188,11 @@ public:
 
 
 
+private slots:
+    void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
+
 private:
 
     Ui::MainWindow *ui;
@@ -134,15 +201,16 @@ private:
 
 
 
-     void paintEvent(QPaintEvent *event);
 
-     void myFunction(QPainter *qp);
+
+
 
      void code(char c[4],float x,float y);
 
      void clipping(char c[],char d[],float &x,float &y,float m);
-
+     void dda(float,float,float,float);
+     void dda1(float,float,float,float);
+     void boundary();
 };
 
 #endif // MAINWINDOW_H
-
