@@ -14,9 +14,11 @@ class Book: public Publication{
      Book(int page_count, string auother, string title, float price)
      {
         this->page_count = page_count;
+      
         this->auother = auother;
         this->title = title;
         this->price = price;
+       
      }
      void displayBook();
 };
@@ -27,6 +29,7 @@ void Book::displayBook()
     cout<<"Price of the book is : "<<price<<endl;
     cout<<"Total page numbers are : "<<page_count<<endl;
     cout<<"Name of the auother is : "<<auother<<endl;
+    cout<<endl;
 }
 class Tape: public Publication{
     public:
@@ -62,6 +65,14 @@ int main()
    cout<<"Name of the auother is : "<<endl;
    cin>>a;
    Book b(pc,a,t,p);
+      try 
+        {
+            if(pc<=0) throw 0;
+        }
+        catch(int num)
+        {
+            cout<<"Page number is invalid "<<endl;    
+        }
    b.displayBook();
    cout<<"Enter title of the Tape : "<<endl;
    cin>>t;
