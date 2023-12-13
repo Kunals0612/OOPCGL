@@ -1,60 +1,48 @@
-
 #include <iostream>
 #include <fstream>
-#include <string>
 using namespace std;
 
-class Student
-{
-	public:
-		string name; int rno;
+class fliehandling{
+    int roll;
+    char name[20];
+    float marks;
 
-	public:
-		void input()
-		{
-			cout<<"Enter Roll Number: ";
-			cin>>rno;
-			cout<<endl<<"Enter Name: ";
-			cin>>name;
-			cout<<endl;
-		}
+public:
+     void input(){
+        ofstream fout("file name", ios::app);
+        cout<<"file operations: "<<endl;
+        cout<<"enter the rollno.: ";
+        cin>>roll;
+        fout<<roll<<endl;
+        cout<<"name: ";
+        cin>>name;
+        fout<<name<<endl;
+        cout<<"marks: ";
+        cin>>marks;
+        fout<<marks<<endl;
+        fout.close();
 
-		void display()
-		{
-			cout<<"Name: "<<name<<endl;
-			cout<<"Roll Number: "<<rno<<endl;
-		}
+     }
+     void write(){
+        ifstream fin("file name");
+        cout<<"reading operations: "<<endl;
+        while(fin>>roll>>name>>marks){
+            cout<<"roll: "<<roll<<"  name: "<<name<<"  marks: "<<marks<<endl;
+        }
+        fin.close();
+     }
+
 };
 
-int main()
-{
-	fstream file;
-	file.open("sample.txt",ios::out);
+int main(){
+    fliehandling obj;
+    char ch;
+    do{
+        obj.input();
+        cout<<"Do you want to continue? (y/n) ";
+        cin>>ch;
+    }while((ch == 'y')||(ch == 'Y'));
 
-	int n;
-	cout<<"Enter Number of students: ";
-	cin>>n;
-	cout<<endl;
-
-	Student s[n];
-
-	for(int i=0;i<n;i++)
-	{
-		s[i].input();
-		file<<"Name: "<<s[i].name<<endl<<"Roll Number: "<<s[i].rno<<endl;
-	}
-
-	file.close();
-
-	string line;
-
-	file.open("sample.txt");
-	while(!file.eof())
-	{
-		file>>line;
-		cout<<line;
-	}
-
-	return 0;
+    obj.write();
+    return 0;
 }
-
