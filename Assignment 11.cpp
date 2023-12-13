@@ -1,74 +1,78 @@
-// Assignment 11
 #include <iostream>
-#include <string>
 #include <vector>
-#include <bits/stdc++.h>
+#include <string>
+#include <algorithm>
 using namespace std;
-
-void print(vector<vector<string>> s)
+class Student
 {
-    for (int i = 0; i < s.size(); i++)
+private:
+    string name;
+    string dob;
+    int tnum;
+    int marks;
+public:
+    Student()
     {
-        for (int j = 0; j < s[0].size(); j++)
-        {
-            cout << s[i][j] << "  ";
-        }
-        cout << "Next item" << endl;
+        name = "";
+        dob = "";
+        tnum = 0;
+        marks = 0;
     }
-}
+    Student(string n, string d, int t, int m)
+    {
+        name = n;
+        dob = d;
+        tnum = t;
+        marks = m;
+    }
+    void display()
+    {
+        cout << "Name: " << name << "\tDOB: " << dob << "\ttele: " << tnum << "\tMarks: " << marks << endl;
+    }
+    string getName() const
+    {
+        return name;
+    }
+    int getnumb() const
+    {
+        return tnum;
+    }
+};
 
-void search(vector<vector<string>> s, string key)
+bool Comparebyname(const Student &s1, const Student &s2)
 {
-    for (int i = 0; i < s.size(); i++)
-    {
-        if (s[i][3] == key)
-        {
-            for (int j = 0; j < s[0].size(); j++)
-            {
-                cout << s[i][j] << "  ";
-            }
-            break;
-        }
-    }
+    return s1.getName() < s2.getName();
 }
-
+bool Comparebynumber(const Student &s1, const Student &s2)
+{
+    return s1.getnumb() < s2.getnumb();
+}
 int main()
 {
-    vector<vector<string>> s;
-    vector<string> v;
-
-    int cond = 1;
-    while (cond != 0)
+    vector<Student> v;
+    Student s1("a", "403", 54444, 33);
+    Student s2("b", "500", 5412, 23);
+    Student s3("c", "300", 5433, 66);
+    Student s4("d", "600", 54, 77);
+    v.push_back(s1);
+    v.push_back(s2);
+    v.push_back(s3);
+    v.push_back(s4);
+    for (int i = 0; i < 4; i++)
     {
-        string item, name, cost, quan;
-        cout << "Item=";
-        cin >> item;
-        cout << "Name=";
-        cin >> name;
-        cout << "Cost=";
-        cin >> cost;
-        cout << "Quantity=";
-        cin >> quan;
-
-        v.push_back(cost);
-        v.push_back(name);
-        v.push_back(quan);
-        v.push_back(item);
-        for (int i = 0; i < v.size(); i++)
-        {
-            cout << v[i] << "  ";
-        }
-        cout << endl;
-        s.push_back(v);
-        v.clear();
-
-        cout << "Press 0 to exit=";
-        cin >> cond;
+        v[i].display();
     }
-
-    sort(s.begin(), s.end());
-    print(s);
-
-    search(s, "bat");
+    cout << "sorting by name: " << endl;
+    sort(v.begin(), v.end(), Comparebyname);
+    for (int i = 0; i < 4; i++)
+    {
+        v[i].display();
+    }
+    cout << "sorting by number: " << endl;
+    sort(v.begin(), v.end(), Comparebynumber);
+    for (int i = 0; i < 4; i++)
+    {
+        v[i].display();
+    }
     return 0;
 }
